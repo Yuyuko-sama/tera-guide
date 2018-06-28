@@ -309,19 +309,19 @@ class TeraGuide{
                 // If it's type message, it's S_DUNGEON_EVENT_MESSAGE with unk1 41
                 case "message": {
                     sending_event = {
-                        message: message,
-                        unk1: 41,
-                        unk2: 0,
-                        unk3: 0
+                        channel: 7,
+                        authorName: config['chat-name'],
+                        message: `<font color="#ffff00">${message}</font>`
                     };
                     break;
                 }
                 // If it's type notification, it's S_CHAT with channel 21
                 case "notification": {
                     sending_event = {
-                        channel: 21,
-                        authorName: config['chat-name'],
-                        message: message
+                        type: 42,
+                        chat: 0,
+                        channel: 27,
+						message: `<font color="#ffff00">${message}</font>`
                     };
                     break;
                 }
@@ -344,8 +344,8 @@ class TeraGuide{
             // Create the timer
             timers[event['id'] || random_timer_id--] = setTimeout(()=> {
                 switch(event['sub_type']) {
-                    case "message": return dispatch.toClient('S_DUNGEON_EVENT_MESSAGE', 1, sending_event);
-                    case "notification": return dispatch.toClient('S_CHAT', 2, sending_event);
+                    case "message": return dispatch.toClient('S_CHAT', 2, sending_event);
+                    case "notification": return dispatch.toClient('S_DUNGEON_EVENT_MESSAGE', 2, sending_event);
                 }
             }, (event['delay'] || 0 ) / speed);
         }
