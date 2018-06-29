@@ -24,8 +24,6 @@ Dungeon | How much is it scripted
 --- | ---
 AANM | All bosses
 AAHM | All bosses
-HH P4 | Firewalls
-RMHM | Debuff mechanic on first boss
 
 
 ## How to create a guide
