@@ -1,5 +1,5 @@
 # Tera-Guide
-I only add Chinese massages > <
+I  add Chinese and English massages now > <
 
 This is a module for creating dungeon guides extremely easily by simple "scripting".
 
