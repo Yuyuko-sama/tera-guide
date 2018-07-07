@@ -181,7 +181,7 @@ module.exports = {
 	
 	//点名喷长条毒（3107）
 	//random aggro poison（3107）
-	
+
 //三王 不愤怒
 //thirdboss, unenraged
 
@@ -349,7 +349,7 @@ module.exports = {
 	"s-720-3000-2202": [{"type": "text","sub_type": "notification","message": "spin or front,back slam","message_TW": "&#x65CB;&#x8F6C;or&#x524D;&#x540E;&#x7838;"}],
 
 //三王特殊技能
-//thirdboss, special attacks  
+//thirdboss, special attacks
  
 	//召唤分身出点名剑气
 	//clones, random aggro, energy beam
