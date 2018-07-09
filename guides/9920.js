@@ -15,7 +15,7 @@ const ITEM_SPAWNED_ON_SWIPE_ID = 576;//576:trees 556:grass
 const ITEM_SPAWNED_ON_SWIPE_SUB_DELAY = 2500;
 const ITEM_SPAWNED_ON_SWIPE_DISTANCE = 150;
 
-const stepone = 2 * Math.PI / 40;//40 flowers in total
+const stepone = 2 * Math.PI / 40;//40 flowers in total  if u think the flower is too many ,u can change the num to smaller.
 const steptwo = 2 * Math.PI / 72;//72 flowers in total
 
 //内圈
