@@ -3,7 +3,7 @@ I  add Chinese and English massages now > <
 
 This is a module for creating dungeon guides extremely easily by simple "scripting".
 
-If u wanna to enable the flowers,just open 9920.js,change the first line const SPAWN_CIRCLES = enable;
+If u wanna to disable that two flowers circles spawn,just open 9920.js,change the first line const SPAWN_CIRCLES = disable;
 
 ## Dependencies
 https://github.com/Kaseaa/library (it also has a readme)
