@@ -13,7 +13,7 @@
 	},
 	"defs": {
 		"S_ACTION_STAGE": [7, 8],
-		"S_ABNORMALITY_BEGIN": [2, 3],,
+		"S_ABNORMALITY_BEGIN": [2, 3],
 		"S_ABNORMALITY_REFRESH": 1,
 		"S_BOSS_GAGE_INFO": 3,
 		"S_LOAD_TOPO": 3,
