@@ -1,6 +1,10 @@
 # Tera-Guide
 
-Is a module for creating dungeon guides extremely easily by simple "scripting".
+I  add Chinese and English massages now > <
+
+This is a module for creating dungeon guides extremely easily by simple "scripting".
+
+If u wanna to disable that two flowers circles spawn,just open 9920.js,change the first line const SPAWN_CIRCLES = disable;
 
 ## Dependencies
 https://github.com/Kaseaa/library (it also has a readme)
@@ -14,15 +18,15 @@ Command | Usage | Arguments
 --- | --- | ---
 \- | Toggles the guide module | \-
 debug | Toggles debug mode | debug(enables everything), hp, abnormal, skill, boss, chat(prints to in chat rather than console)
-
+event | triggeres an event, where you are the entity. Used for testing | First argument is a **type** from "Options". The second argument contains the values. Example: `/8 guide event spawn '{"id": 500, "sub_delay": 5000}'`
 ## Supported
 Feel free to create your own guide/add-on and send a pull-request :=)
 
 Dungeon | How much is it scripted
 --- | ---
-AAHM | Last boss
-HH P4 | Firewalls
-RMHM | Debuff mechanic on first boss
+AANM | All bosses
+AAHM | All bosses
+
 
 
 ## How to create a guide
