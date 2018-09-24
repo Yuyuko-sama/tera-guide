@@ -20,7 +20,6 @@ const WARRIOR_TANK_IDS = [100200, 100201];
 class TeraGuide{
     constructor(dispatch) {
         const { player, entity, library, effect } = require('library')(dispatch);
-        const command = require('command')(dispatch);
 
         // An object of types and their corresponding function handlers
         const function_event_handlers = {
@@ -51,7 +50,7 @@ class TeraGuide{
         function debug_message(d, ...args) {
             if(d) {
                 console.log(`[${Date.now() % 100000}][Guide]`, ...args);
-                if(debug.chat) command.message(args.toString());
+                if(debug.chat) dispatch.command.message(args.toString());
             }
         }
 
@@ -143,10 +142,10 @@ class TeraGuide{
                 // Due to a bug for some bizare reason(probably proxy fucking itself) we do this ugly hack
                 e.loc.w = e.w;
                 // We've confirmed it's a mob, so it's plausible we want to act on this
-                if(ent) return handle_event(Object.assign({}, ent, e), library.getSkillInfo(e.skill, true, true).id, 'Skill', 's', debug.debug || debug.skill || (ent['templateId'] % 1000 === 0 ? debug.boss : false), e.speed);
+                if(ent) return handle_event(Object.assign({}, ent, e), e.skill.id, 'Skill', 's', debug.debug || debug.skill || (ent['templateId'] % 1000 === 0 ? debug.boss : false), e.speed);
             }
         }
-        dispatch.hook('S_ACTION_STAGE', 5, {order: 15}, s_action_stage);
+        dispatch.hook('S_ACTION_STAGE', dispatch.majorPatchVersion >= 75 ? 8 : 7, {order: 15}, s_action_stage);
 
         /** ABNORMALITY **/
 
@@ -177,7 +176,7 @@ class TeraGuide{
                 if(target_ent) handle_event(target_ent, e.id, 'Abnormality', 'ab', debug.debug || debug.abnormal);
             }
         }
-        dispatch.hook('S_ABNORMALITY_BEGIN', 2, {order: 15}, abnormality_triggered);
+        dispatch.hook('S_ABNORMALITY_BEGIN', dispatch.majorPatchVersion >= 75 ? 3 : 2, {order: 15}, abnormality_triggered);
         dispatch.hook('S_ABNORMALITY_REFRESH', 1, {order: 15}, abnormality_triggered);
 
         /** HEALTH **/
@@ -221,19 +220,19 @@ class TeraGuide{
         });
 
         // Guide command
-        command.add('guide', (type, arg1, arg2)=> {
+        dispatch.command.add('guide', (type, arg1, arg2)=> {
             switch(type) {
                 // Toggle debug settings
                 case "debug": {
-                    if(!arg1 || debug[arg1] === undefined) return command.message(`Invalid sub command for debug mode. ${arg1}`);
+                    if(!arg1 || debug[arg1] === undefined) return dispatch.command.message(`Invalid sub command for debug mode. ${arg1}`);
                     debug[arg1] = !debug[arg1];
-                    command.message(`Guide module debug(${arg1}) mode has been ${debug[arg1]?"enabled":"disabled"}.`);
+                    dispatch.command.message(`Guide module debug(${arg1}) mode has been ${debug[arg1]?"enabled":"disabled"}.`);
                     break;
                 }
                 // Testing events
                 case "event": {
                     // If we didn't get a second argument or the argument value isn't an event type, we return
-                    if(!arg1 || !function_event_handlers[arg1] || !arg2) return command.message(`Invalid values for sub command "event" ${arg1} | ${arg2}`);
+                    if(!arg1 || !function_event_handlers[arg1] || !arg2) return dispatch.command.message(`Invalid values for sub command "event" ${arg1} | ${arg2}`);
 
                     // Call a function handler with the event we got from arg2 with yourself as the entity
                     function_event_handlers[arg1](JSON.parse(arg2), player);
@@ -242,7 +241,7 @@ class TeraGuide{
                 // No known sub command found, so toggle on/off
                 default: {
                     enabled = !enabled;
-                    command.message(`Guide module has been ${enabled?"enabled":"disabled"}.`);
+                    dispatch.command.message(`Guide module has been ${enabled?"enabled":"disabled"}.`);
                 }
             }
         });
