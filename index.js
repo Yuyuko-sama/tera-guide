@@ -310,7 +310,7 @@ class TeraGuide{
                     sending_event = {
                         channel: 7,
                         authorName: config['chat-name'],
-                        message: `<font color="#32CD32">${message}</font>`
+                        message: `<font color="#FF4500">${message}</font>`
                     };
                     break;
                 }
@@ -320,7 +320,7 @@ class TeraGuide{
                         type: 42,
                         chat: 0,
                         channel: 27,
-						message: `<font color="#32CD32" size="32">${message}</font>`
+						message: `<font color="#FF4500" size="32">${message}</font>`
                     };
                     break;
                 }
