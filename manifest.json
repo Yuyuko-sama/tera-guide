@@ -1,6 +1,6 @@
 {
 	"files": {
-		"README.md": "d12db28623ec2ff459fadbd8d83551dc4eb2ae971f68416bd0d8e92f5cfc8b36",
+		"readme.md": "d12db28623ec2ff459fadbd8d83551dc4eb2ae971f68416bd0d8e92f5cfc8b36",
 		"index.js": "b40b54bc79368b19e071f8a48256ba41fb04fcee13956e03a3be6d502671c795",
 		"config.json": {
 			"overwrite": false,
