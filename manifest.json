@@ -1,7 +1,7 @@
 {
 	"files": {
 		"README.md": "d12db28623ec2ff459fadbd8d83551dc4eb2ae971f68416bd0d8e92f5cfc8b36",
-		"index.js": "2ecc1177c07cef6412f45528ebf98816d7669b3aad7629f24f92b742180d9756",
+		"index.js": "290f3579bd6804dfbf1a8e03b47cedee1ba24585f912a33b54866b97e26ae116",
 		"config.json": {
 			"overwrite": false,
 			"hash": "a277dd33492e3a45ce8fdd0060a09fa4a24671e8b13d5ddc2fa7471c67aaf8d5"
@@ -12,15 +12,20 @@
 		
 	},
 	"defs": {
-		"S_ACTION_STAGE": [7, 8],
-		"S_ABNORMALITY_BEGIN": [2, 3],
+		"S_ABNORMALITY_BEGIN": 3,
 		"S_ABNORMALITY_REFRESH": 1,
+		"S_ACTION_STAGE": 8,
 		"S_BOSS_GAGE_INFO": 3,
-		"S_LOAD_TOPO": 3,
-		"S_SPAWN_COLLECTION": 4,
-		"S_DESPAWN_COLLECTION": 2,
 		"S_CHAT": 2,
+		"S_DESPAWN_BUILD_OBJECT": 2,
+		"S_DESPAWN_COLLECTION": 2,
+		"S_DESPAWN_DROPITEM": 4,
 		"S_DUNGEON_EVENT_MESSAGE": 2,
-		"S_PLAY_SOUND": 1
+		"S_LOAD_TOPO": 3,
+		"S_PLAY_SOUND": 1,
+		"S_QUEST_BALLOON": 1,
+		"S_SPAWN_BUILD_OBJECT": 2,
+		"S_SPAWN_COLLECTION": 4,
+		"S_SPAWN_DROPITEM": 6
 	}
 }
