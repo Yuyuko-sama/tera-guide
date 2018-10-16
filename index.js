@@ -427,9 +427,9 @@ class TeraGuide{
                 // If it's type message, it's S_DUNGEON_EVENT_MESSAGE with unk1 41
                 case "message": {
                     sending_event = {
-                        channel: 7,
+                        channel: 21,
                         authorName: config['chat-name'],
-                        message: `<font color="#FFFF00">${message}</font>`
+                        message: message
                     };
                     break;
                 }
