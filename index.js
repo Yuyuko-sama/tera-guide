@@ -50,7 +50,6 @@ class TeraGuide{
     constructor(mod) {
         const fake_mod = new modWrapper(mod);
         const { player, entity, library, effect } = require('library')(mod);
-        const command = require('command')(mod);
 
         // An object of types and their corresponding function handlers
         const function_event_handlers = {
