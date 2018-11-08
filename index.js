@@ -18,18 +18,18 @@ const HEALER_CLASS_IDS = [6, 7];
 const WARRIOR_TANK_IDS = [100200, 100201];
 
 
-class modWrapper {
-    constructor(mod) {
-        this._mod = mod;
+class DispatchWrapper {
+    constructor(dispatch) {
+        this._dispatch = dispatch;
         this._hooks = [];
     }
 
     hook(...args) {
-        this._hooks.push(this._mod.hook(...args));
+        this._hooks.push(this._dispatch.hook(...args));
     }
 
     hookOnce(...args) {
-        this._mod.hookOnce(...args);
+        this._dispatch.hookOnce(...args);
     }
 
     unhook(...args) {
@@ -37,19 +37,20 @@ class modWrapper {
     }
 
     _remove_all_hooks() {
-        for(const hook of this._hooks) this._mod.unhook(hook);
+        for(const hook of this._hooks) this._dispatch.unhook(hook);
     }
 
-    send(...args) { return this.send(...args); }
-    send(...args) { return this.send(...args); }
-    send(...args) { return this._mod.send(...args); }
+    toServer(...args) { return this.send(...args); }
+    toClient(...args) { return this.send(...args); }
+    send(...args) { return this._dispatch.send(...args); }
 }
 
 
 class TeraGuide{
-    constructor(mod) {
-        const fake_mod = new modWrapper(mod);
-        const { player, entity, library, effect } = require('library')(mod);
+    constructor(dispatch) {
+        const fake_dispatch = new DispatchWrapper(dispatch);
+        const { player, entity, library, effect } = require('library')(dispatch);
+        const command = require('command')(dispatch);
 
         // An object of types and their corresponding function handlers
         const function_event_handlers = {
@@ -82,7 +83,7 @@ class TeraGuide{
         function debug_message(d, ...args) {
             if(d) {
                 console.log(`[${Date.now() % 100000}][Guide]`, ...args);
-                if(debug.chat) mod.command.message(args.toString());
+                if(debug.chat) command.message(args.toString());
             }
         }
 
@@ -177,7 +178,7 @@ class TeraGuide{
                 if(ent) return handle_event(Object.assign({}, ent, e), e.skill.id, 'Skill', 's', debug.debug || debug.skill || (ent['templateId'] % 1000 === 0 ? debug.boss : false), e.speed);
             }
         }
-        mod.hook('S_ACTION_STAGE', 8, {order: 15}, s_action_stage);
+        dispatch.hook('S_ACTION_STAGE', 8, {order: 15}, s_action_stage);
 
         /** ABNORMALITY **/
 
@@ -208,13 +209,13 @@ class TeraGuide{
                 if(target_ent) handle_event(target_ent, e.id, 'Abnormality', 'ab', debug.debug || debug.abnormal);
             }
         }
-        mod.hook('S_ABNORMALITY_BEGIN', 3, {order: 15}, abnormality_triggered);
-        mod.hook('S_ABNORMALITY_REFRESH', 1, {order: 15}, abnormality_triggered);
+        dispatch.hook('S_ABNORMALITY_BEGIN', 3, {order: 15}, abnormality_triggered);
+        dispatch.hook('S_ABNORMALITY_REFRESH', 1, {order: 15}, abnormality_triggered);
 
         /** HEALTH **/
 
         // Boss health bar triggered
-        mod.hook('S_BOSS_GAGE_INFO', 3, e=> {
+        dispatch.hook('S_BOSS_GAGE_INFO', 3, e=> {
              // If the guide module is active and a guide for the current dungeon is found
              if(enabled && guide_found) {
                 const ent = entity['mobs'][e.id.toString()];
@@ -225,7 +226,7 @@ class TeraGuide{
 
         /** S_DUNGEON_EVENT_MESSAGE **/
 
-        mod.hook('S_DUNGEON_EVENT_MESSAGE', 2, e=> {
+        dispatch.hook('S_DUNGEON_EVENT_MESSAGE', 2, e=> {
             if (enabled && guide_found) {
                 const result = /@dungeon:(\d+)/g.exec(e.message);
                 if (result) {
@@ -239,7 +240,7 @@ class TeraGuide{
 
         /** S_QUEST_BALLOON **/
 
-        mod.hook('S_QUEST_BALLOON', 1, e=> {
+        dispatch.hook('S_QUEST_BALLOON', 1, e=> {
             if (enabled && guide_found) {
                 const source_ent = entity['mobs'][e.source.toString()];
                 const result = /@monsterBehavior:(\d+)/g.exec(e.message);
@@ -252,13 +253,13 @@ class TeraGuide{
         /** MISC **/
 
         // Load guide and clear out timers
-        mod.hook('S_LOAD_TOPO', 3, e=> {
+        dispatch.hook('S_LOAD_TOPO', 3, e=> {
             // Clear out the timers
             for(let key in timers) clearTimeout(timers[key]);
             timers = {};
 
             // Clear out previous hooks, that our previous guide module hooked
-            fake_mod._remove_all_hooks();
+            fake_dispatch._remove_all_hooks();
 
             // Send debug message
             debug_message(debug.debug, 'Entered zone:', e.zone);
@@ -281,33 +282,33 @@ class TeraGuide{
 
             // Try calling the "load" function
             try {
-                active_guide.load(fake_mod);
+                active_guide.load(fake_dispatch);
             }catch(e) { debug_message(debug.debug, e); }
         });
 
         // Guide command
-        mod.command.add('guide', {
+        command.add('guide', {
             // Toggle debug settings
             debug(arg1) {
-                if(!arg1 || debug[arg1] === undefined) return mod.command.message(`Invalid sub command for debug mode. ${arg1}`);
+                if(!arg1 || debug[arg1] === undefined) return command.message(`Invalid sub command for debug mode. ${arg1}`);
                 debug[arg1] = !debug[arg1];
-                mod.command.message(`Guide module debug(${arg1}) mode has been ${debug[arg1]?"enabled":"disabled"}.`);
+                command.message(`Guide module debug(${arg1}) mode has been ${debug[arg1]?"enabled":"disabled"}.`);
             },
             // Testing events
             event(arg1, arg2) {
                 // If we didn't get a second argument or the argument value isn't an event type, we return
-                if(!arg1 || !function_event_handlers[arg1] || !arg2) return mod.command.message(`Invalid values for sub command "event" ${arg1} | ${arg2}`);
+                if(!arg1 || !function_event_handlers[arg1] || !arg2) return command.message(`Invalid values for sub command "event" ${arg1} | ${arg2}`);
 
                 // Call a function handler with the event we got from arg2 with yourself as the entity
                 function_event_handlers[arg1](JSON.parse(arg2), player);
             },
             stream() {
             	stream = !stream;
-            	mod.command.message(`Streamer mode has been ${stream?"enabled":"disabled"}.`);
+            	command.message(`Streamer mode has been ${stream?"enabled":"disabled"}.`);
             },
             $default() {
                 enabled = !enabled;
-                mod.command.message(`Guide module has been ${enabled?"enabled":"disabled"}.`);
+                command.message(`Guide module has been ${enabled?"enabled":"disabled"}.`);
             }
         });
 
@@ -323,6 +324,7 @@ class TeraGuide{
             //if(!event['distance']) return debug_message(true, "Spawn handler needs a distance");
             // Ignore if streamer mode is enabled
             if(stream) return;
+
             // Set sub_type to be collection as default for backward compatibility
             const sub_type =  event['sub_type'] || 'collection';
 
@@ -397,18 +399,18 @@ class TeraGuide{
             // Create the timer for spawning the item
             timers[item_unique_id] = setTimeout(()=> {
                 switch(sub_type) {
-                    case "collection": return mod.send('S_SPAWN_COLLECTION', 4, sending_event);
-                    case "item": return mod.send('S_SPAWN_DROPITEM', 6, sending_event);
-                    case "build_object": return mod.send('S_SPAWN_BUILD_OBJECT', 2, sending_event);
+                    case "collection": return dispatch.toClient('S_SPAWN_COLLECTION', 4, sending_event);
+                    case "item": return dispatch.toClient('S_SPAWN_DROPITEM', 6, sending_event);
+                    case "build_object": return dispatch.toClient('S_SPAWN_BUILD_OBJECT', 2, sending_event);
                 }
             }, event['delay'] || 0 / speed);
 
             // Create the timer for despawning the item
             timers[random_timer_id--] = setTimeout(()=> {
                 switch(sub_type) {
-                    case "collection": return mod.send('S_DESPAWN_COLLECTION', 2, despawn_event);
-                    case "item": return mod.send('S_DESPAWN_DROPITEM', 4, despawn_event);
-                    case "build_object": return mod.send('S_DESPAWN_BUILD_OBJECT', 2, despawn_event);
+                    case "collection": return dispatch.toClient('S_DESPAWN_COLLECTION', 2, despawn_event);
+                    case "item": return dispatch.toClient('S_DESPAWN_DROPITEM', 4, despawn_event);
+                    case "build_object": return dispatch.toClient('S_DESPAWN_BUILD_OBJECT', 2, despawn_event);
                 }
             }, event['sub_delay'] / speed);
         }
@@ -416,7 +418,7 @@ class TeraGuide{
         // Text handler
         function text_handler(event, ent, speed=1.0) {
             // Fetch the message(with region tag)
-            const message = event[`message_${mod.region}`] || event[`message_${mod.region.toUpperCase()}`] || event['message'];
+            const message = event[`message_${dispatch.base.region}`] || event[`message_${dispatch.base.region.toUpperCase()}`] || event['message'];
             // Make sure sub_type is defined
             if(!event['sub_type']) return debug_message(true, "Text handler needs a sub_type");
             // Make sure message is defined
@@ -425,7 +427,7 @@ class TeraGuide{
             let sending_event = {};
             // Create the sending event
             switch(event['sub_type']) {
-				// If it's type notification, it's S_CHAT with channel 21
+                // If it's type notification, it's S_CHAT with channel 21
                 case "message": {
                     sending_event = {
                         channel: 25,
@@ -438,9 +440,9 @@ class TeraGuide{
                 case "notification": {
                     sending_event = {
                         type: 42,
-                        chat: 0,
+						chat: 0,
                         channel: 27,
-						message: `<font color="#FFFF00" size="32">${message}</font>`
+                        message: `<font color="#FFFF00" size="32">${message}</font>`
                     };
                     break;
                 }
@@ -448,8 +450,8 @@ class TeraGuide{
                 case "speech": {
                 	// Ignore if streamer mode is enabled
            			if(stream) return;
-					// if the say dependency was found
 
+                    // if the say dependency was found
                     if(say) {
                         timers[event['id'] || random_timer_id--] = setTimeout(()=> {
                             say.speak(message);
@@ -467,12 +469,12 @@ class TeraGuide{
             timers[event['id'] || random_timer_id--] = setTimeout(()=> {
             	if (!stream) {
 	                switch(event['sub_type']) {
-	                    case "message": return mod.send('S_CHAT', 2, sending_event);
-	                    case "notification": return mod.send('S_DUNGEON_EVENT_MESSAGE', 2, sending_event);
+	                    case "message": return dispatch.toClient('S_CHAT', 2, sending_event);
+	                    case "notification": return dispatch.toClient('S_DUNGEON_EVENT_MESSAGE', 2, sending_event);
 	                }
             	} else {
             		// If streamer mode is enabled, send message all messages to party chat instead
-            		return mod.send('S_CHAT', 2, { channel: 1, authorName: config['chat-name'], message });
+            		return dispatch.toClient('S_CHAT', 2, { channel: 1, authorName: config['chat-name'], message });
             	}
             }, (event['delay'] || 0 ) / speed);
         }
@@ -487,7 +489,7 @@ class TeraGuide{
             // Create the timer
             timers[event['id']] = setTimeout(()=> {
                 // Send the sound
-                mod.send('S_PLAY_SOUND', 1, {
+                dispatch.toClient('S_PLAY_SOUND', 1, {
                     SoundID: event['id']
                 });
             });
@@ -511,7 +513,7 @@ class TeraGuide{
             if(!event['func']) return debug_message(true, "Func handler needs a func");
 
             // Start the timer for the function call
-            timers[event['id'] || random_timer_id--] = setTimeout(event['func'], (event['delay'] || 0) / speed, function_event_handlers, event, ent, fake_mod);
+            timers[event['id'] || random_timer_id--] = setTimeout(event['func'], (event['delay'] || 0) / speed, function_event_handlers, event, ent, fake_dispatch);
         }
     }
 }
