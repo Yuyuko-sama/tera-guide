@@ -50,7 +50,7 @@ class TeraGuide{
     constructor(dispatch) {
         const fake_dispatch = new DispatchWrapper(dispatch);
         const { player, entity, library, effect } = require('library')(dispatch);
-        const command = require('command')(dispatch);
+        const command = dispatch.command;
 
         // An object of types and their corresponding function handlers
         const function_event_handlers = {
