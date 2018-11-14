@@ -431,7 +431,6 @@ class TeraGuide{
                 case "message": {
                     sending_event = {
                         channel: 25,
-                        authorName: config['chat-name'],
                         message: message
                     };
                     break;
