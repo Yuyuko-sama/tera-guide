@@ -431,6 +431,7 @@ class TeraGuide{
                 case "message": {
                     sending_event = {
                         channel: 21,
+						authorName: config['chat-name'],
                         message: message
                     };
                     break;
@@ -439,7 +440,7 @@ class TeraGuide{
                 case "notification": {
                     sending_event = {
                         type: 42,
-						chat: 0,
+						chat: false,
                         channel: 27,
                         message: `<font color="#FFFF00" size="32">${message}</font>`
                     };
