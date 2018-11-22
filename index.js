@@ -430,7 +430,7 @@ class TeraGuide{
                 // If it's type notification, it's S_CHAT with channel 21
                 case "message": {
                     sending_event = {
-                        channel: 25,
+                        channel: 21,
                         message: message
                     };
                     break;
