@@ -170,7 +170,7 @@ class TeraGuide{
         // Boss skill action
         function s_action_stage(e) {
             // If the guide module is active and a guide for the current dungeon is found
-            if(enabled && guide_found) {
+            if(enabled && guide_found && e.stage === 0) {
                 const ent = entity['mobs'][e.gameId.toString()];
                 // Due to a bug for some bizare reason(probably proxy fucking itself) we do this ugly hack
                 e.loc.w = e.w;
@@ -431,7 +431,6 @@ class TeraGuide{
                 case "message": {
                     sending_event = {
                         channel: 21,
-						authorName: config['chat-name'],
                         message: message
                     };
                     break;
