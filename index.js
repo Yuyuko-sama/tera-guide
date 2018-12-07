@@ -438,7 +438,7 @@ class TeraGuide{
                 // If it's type message, it's S_DUNGEON_EVENT_MESSAGE with type 41
                 case "notification": {
                     sending_event = {
-                        type: 42,
+                        type: 43,
 						chat: false,
                         channel: 27,
                         message: `<font color="#FFFF00" size="32">${message}</font>`
