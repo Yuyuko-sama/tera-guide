@@ -445,6 +445,26 @@ class TeraGuide{
                     };
                     break;
                 }
+                // type 44
+                case "warning": {
+                    sending_event = {
+                        type: 44,
+						chat: false,
+                        channel: 27,
+                        message: `<font color="#FFFF00" size="32">${message}</font>`
+                    };
+                    break;
+                }
+                // type 65
+                case "tips": {
+                    sending_event = {
+                        type: 65,
+						chat: false,
+                        channel: 27,
+                        message: `<font color="#FFFF00" size="50">${message}</font>`
+                    };
+                    break;
+                }
                 // If it's type speech, it's text to speech. But since it isn't "required" to a try/catch
                 case "speech": {
                 	// Ignore if streamer mode is enabled
@@ -470,6 +490,8 @@ class TeraGuide{
 	                switch(event['sub_type']) {
 	                    case "message": return dispatch.toClient('S_CHAT', 2, sending_event);
 	                    case "notification": return dispatch.toClient('S_DUNGEON_EVENT_MESSAGE', 2, sending_event);
+						case "warning": return dispatch.toClient('S_DUNGEON_EVENT_MESSAGE', 2, sending_event);
+						case "tips": return dispatch.toClient('S_DUNGEON_EVENT_MESSAGE', 2, sending_event);
 	                }
             	} else {
             		// If streamer mode is enabled, send message all messages to party chat instead
