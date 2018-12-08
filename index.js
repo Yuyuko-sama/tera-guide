@@ -456,7 +456,7 @@ class TeraGuide{
                     break;
                 }
                 // type 65
-                case "tips": {
+                case "tip": {
                     sending_event = {
                         type: 65,
 						chat: false,
@@ -491,7 +491,7 @@ class TeraGuide{
 	                    case "message": return dispatch.toClient('S_CHAT', 2, sending_event);
 	                    case "notification": return dispatch.toClient('S_DUNGEON_EVENT_MESSAGE', 2, sending_event);
 						case "warning": return dispatch.toClient('S_DUNGEON_EVENT_MESSAGE', 2, sending_event);
-						case "tips": return dispatch.toClient('S_DUNGEON_EVENT_MESSAGE', 2, sending_event);
+						case "tip": return dispatch.toClient('S_DUNGEON_EVENT_MESSAGE', 2, sending_event);
 	                }
             	} else {
             		// If streamer mode is enabled, send message all messages to party chat instead
