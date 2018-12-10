@@ -6,7 +6,10 @@
         "abnormal": false,
         "skill": false,
         "boss": false,
-        "chat": false
+        "chat": false,
+        "dm": false,
+        "qb": false
     },
+    "stream": false,
     "chat-name": "Guide"
 }
