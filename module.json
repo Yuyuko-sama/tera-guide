@@ -1,5 +1,10 @@
 {
 	"disableAutoUpdate": false,
-	"servers": ["https://raw.githubusercontent.com/Yuyuko-sama/tera-guide/master/"],
-	"supportUrl": "https://github.com/Yuyuko-sama/tera-guide/issues"
+	"name": "tera-guide",
+	"author": "kasea / yuyuko",
+    "supportUrl": "https://github.com/Kaseaa/Yuyuko-sama/issues",
+    "servers": ["https://raw.githubusercontent.com/Yuyuko-sama/tera-guide/master/"],
+    "dependencies": {
+        "library": "https://raw.githubusercontent.com/Kaseaa/library/master/module.json"
+    }
 }
