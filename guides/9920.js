@@ -11,7 +11,7 @@ let SPAWNING_FIRST_CIRCLE_FLOWERS = [];
 let SPAWNING_SECOND_CIRCLE_FLOWERS = [];
 
 const TIMER_DELAY = 600;
-const ITEM_SPAWNED_ON_SWIPE_ID = 576;//576:trees 556:grass 
+const ITEM_SPAWNED_ON_SWIPE_ID = 6;//576:trees 556:grass 
 const ITEM_SPAWNED_ON_SWIPE_SUB_DELAY = 2500;
 const ITEM_SPAWNED_ON_SWIPE_DISTANCE = 150;
 
@@ -25,7 +25,7 @@ for(let angle = -Math.PI; angle <= Math.PI; angle += stepone) {
     if(!SPAWN_CIRCLES) continue;
 	SPAWNING_FIRST_CIRCLE_FLOWERS.push({
         "type": "spawn",
-        "id": 603,
+        "id": 552,
         "sub_delay": 6000,
         "distance": 143,
         "offset": angle
@@ -33,7 +33,7 @@ for(let angle = -Math.PI; angle <= Math.PI; angle += stepone) {
 	
 	SPAWNING_SECOND_CIRCLE_FLOWERS.push({
         "type": "spawn",
-        "id": 603,
+        "id": 552,
         "sub_delay": 6000,
         "distance": 157,
         "offset": angle
@@ -46,7 +46,7 @@ for(let angle = -Math.PI; angle <= Math.PI; angle += steptwo) {
 	if(!SPAWN_CIRCLES) continue;
 	SPAWNING_FIRST_CIRCLE_FLOWERS.push({
 	    "type": "spawn",
-        "id": 603,
+        "id": 552,
         "sub_delay": 6000,
         "distance": 293,
         "offset": angle
@@ -54,7 +54,7 @@ for(let angle = -Math.PI; angle <= Math.PI; angle += steptwo) {
 	
 	SPAWNING_SECOND_CIRCLE_FLOWERS.push({
 		"type": "spawn",
-        "id": 603,
+        "id": 552,
         "sub_delay": 6000,
         "distance": 307,
         "offset": angle
@@ -159,7 +159,18 @@ function set_clockwise(clockwise, handlers, _, third_boss_entity) {
             let current_colour = colour_rotation[(colour_rotation.indexOf(colour_to_use) + i) % 3];
 
             handlers['spawn']({
-                "id": 567,
+                "sub_type": "item",
+				"id": 369,
+                "delay": i * 2600,
+                "sub_delay": (i + 1) * 3000,
+                "distance": 150,
+                "offset": COLOURS_OFFSETS[current_colour]
+            }, third_boss_entity);
+			handlers['spawn']({
+                "sub_type": "build_object",
+				"id": 1,
+				"ownerName": "yuyuko",
+				"message": "safe",
                 "delay": i * 2600,
                 "sub_delay": (i + 1) * 3000,
                 "distance": 150,
