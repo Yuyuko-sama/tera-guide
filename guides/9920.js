@@ -25,7 +25,7 @@ for(let angle = -Math.PI; angle <= Math.PI; angle += stepone) {
     if(!SPAWN_CIRCLES) continue;
 	SPAWNING_FIRST_CIRCLE_FLOWERS.push({
         "type": "spawn",
-        "id": 552,
+        "id": 548,
         "sub_delay": 6000,
         "distance": 143,
         "offset": angle
@@ -33,7 +33,7 @@ for(let angle = -Math.PI; angle <= Math.PI; angle += stepone) {
 	
 	SPAWNING_SECOND_CIRCLE_FLOWERS.push({
         "type": "spawn",
-        "id": 552,
+        "id": 548,
         "sub_delay": 6000,
         "distance": 157,
         "offset": angle
@@ -46,7 +46,7 @@ for(let angle = -Math.PI; angle <= Math.PI; angle += steptwo) {
 	if(!SPAWN_CIRCLES) continue;
 	SPAWNING_FIRST_CIRCLE_FLOWERS.push({
 	    "type": "spawn",
-        "id": 552,
+        "id": 548,
         "sub_delay": 6000,
         "distance": 293,
         "offset": angle
@@ -54,7 +54,7 @@ for(let angle = -Math.PI; angle <= Math.PI; angle += steptwo) {
 	
 	SPAWNING_SECOND_CIRCLE_FLOWERS.push({
 		"type": "spawn",
-        "id": 552,
+        "id": 548,
         "sub_delay": 6000,
         "distance": 307,
         "offset": angle
@@ -497,12 +497,12 @@ module.exports = {
 	//召唤分身出点名剑气
 	//clones, random aggro, energy beam
 	
-	"s-920-3000-1400-0": [{"type": "text","sub_type": "notification","message": "beam","message_TW": "&#x53EC;&#x5524;&#x5206;&#x8EAB;&#xFF1A;&#x70B9;&#x540D;&#x5251;&#x6C14;"}],
+	"s-920-3000-1400-0": [{"type": "text","sub_type": "notification","message": "beam","message_TW": "&#x53EC;&#x5484;&#x5206;&#x8EAB;&#xFF1A;&#x70B9;&#x540D;&#x5251;&#x6C14;"}],
 	
 	//召唤分身出旋转攻击
 	//clones, random aggro, spin attack
 	
-    "s-920-3000-1401-0": [{"type": "text","sub_type": "notification","message": "spin","message_TW": "&#x53EC;&#x5524;&#x5206;&#x8EAB;&#xFF1A;&#x65CB;&#x8F6C;&#x653B;&#x51FB;"}],
+    "s-920-3000-1401-0": [{"type": "text","sub_type": "notification","message": "spin","message_TW": "&#x53EC;&#x5484;&#x5206;&#x8EAB;&#xFF1A;&#x65CB;&#x8F6C;&#x653B;&#x51FB;"}],
     
 //三王色鉴颜色位置标识
 //color marks in cage

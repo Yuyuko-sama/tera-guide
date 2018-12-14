@@ -354,11 +354,11 @@ module.exports = {
 	//召唤分身出点名剑气
 	//clones, random aggro, energy beam
 	
-	"s-720-3000-1400-0": [{"type": "text","sub_type": "notification","message": "beam","message_TW": "&#x53EC;&#x5524;&#x5206;&#x8EAB;&#xFF1A;&#x70B9;&#x540D;&#x5251;&#x6C14;"}],
+	"s-720-3000-1400-0": [{"type": "text","sub_type": "notification","message": "beam","message_TW": "&#x53EC;&#x5484;&#x5206;&#x8EAB;&#xFF1A;&#x70B9;&#x540D;&#x5251;&#x6C14;"}],
 	
 	//召唤分身出旋转攻击
 	//clones, random aggro, spin attack
 	
-    "s-720-3000-1401-0": [{"type": "text","sub_type": "notification","message": "spin","message_TW": "&#x53EC;&#x5524;&#x5206;&#x8EAB;&#xFF1A;&#x65CB;&#x8F6C;&#x653B;&#x51FB;"}]
+    "s-720-3000-1401-0": [{"type": "text","sub_type": "notification","message": "spin","message_TW": "&#x53EC;&#x5484;&#x5206;&#x8EAB;&#xFF1A;&#x65CB;&#x8F6C;&#x653B;&#x51FB;"}]
 
 };
